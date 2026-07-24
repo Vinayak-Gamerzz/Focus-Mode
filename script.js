@@ -1,3 +1,10 @@
+let topZ = 1000;
+
+function bringToFront(panel){
+    topZ++;
+    panel.style.zIndex = topZ;
+}
+
 const timer=document.getElementById("timer");
 const mode=document.getElementById("mode");
 const session=document.getElementById("session");
@@ -213,33 +220,20 @@ input.addEventListener("keydown", function(e) {
 
 const settingsBtn = document.getElementById("settingsBtn");
 
-const settingsModal = document.getElementById("settingsModal");
+const settingsPanel = document.getElementById("settingsPanel");
 
 const closeModal = document.getElementById("closeModal");
 
 settingsBtn.addEventListener("click",()=>{
 
-    settingsModal.style.display="flex";
+    settingsPanel.classList.add("open");
+    bringToFront(settingsPanel);
 
 });
-
-
 
 closeModal.addEventListener("click",()=>{
-    
-    settingsModal.style.display="none";
 
-});
-
-
-
-window.addEventListener("click",(e)=>{
-
-    if(e.target===settingsModal){
-
-        settingsModal.style.display="none";
-
-    }
+    settingsPanel.classList.remove("open");
 
 });
 
@@ -454,7 +448,7 @@ saveTimer.addEventListener("click",()=>{
 
     updateTimer();
 
-    settingsModal.style.display="none";
+    settingsPanel.classList.remove("open");
 
 });
 
@@ -467,7 +461,9 @@ const saveNotes = document.getElementById("saveNotes");
 const clearNotes = document.getElementById("clearNotes");
 
 notesBtn.addEventListener("click",()=>{
+
     notesPanel.classList.add("open");
+    bringToFront(notesPanel);
 
 });
 
@@ -494,7 +490,9 @@ const statsPanel = document.getElementById("statsPanel");
 const closeStats = document.getElementById("closeStats");
 
 statsMenu.addEventListener("click",()=>{
+
     statsPanel.classList.add("open");
+    bringToFront(statsPanel);
     updateStatistics();
 
 });
@@ -516,22 +514,15 @@ function updateStatistics(){
 
 };
 
-statsMenu.addEventListener("click",()=>{
-
-    console.log("Stats clicked");
-
-    statsPanel.classList.add("open");
-
-    updateStatistics();
-
-});
-
 const todoBtn = document.getElementById("todoBtn");
 const todoPanel = document.getElementById("todoPanel");
 const closeTodo = document.getElementById("closeTodo");
 
-todoBtn.addEventListener("click", () => {
+todoBtn.addEventListener("click",()=>{
+
     todoPanel.classList.add("open");
+    bringToFront(todoPanel);
+
 });
 
 closeTodo.addEventListener("click", () => {
@@ -549,20 +540,37 @@ const songs = {
 
 };
 
-document.querySelectorAll(".music-option").forEach(btn=>{
-    btn.addEventListener("click",()=>{
+const savedMusic = localStorage.getItem("music");
+
+    if(savedMusic && savedMusic !== "off"){
+        music.src = songs[savedMusic];
+        music.play().catch(() => {});
+
+}
+
+document.querySelectorAll(".music-option").forEach(btn => {
+
+    btn.addEventListener("click", () => {
+
+        document.querySelectorAll(".music-option").forEach(b => {
+            b.classList.remove("active");
+        });
+
+        btn.classList.add("active");
+
         const type = btn.dataset.music;
 
-        if(type=="off"){
+        localStorage.setItem("music", type);
+
+        if(type == "off"){
             music.pause();
             return;
-
         }
 
         music.src = songs[type];
         music.play();
 
-    })
+    });
 
 });
 
@@ -571,4 +579,50 @@ document.getElementById("volume").addEventListener("input",(e)=>{
 
 });
 
-localStorage.setItem("music","rain")
+const musicBtn = document.getElementById("musicBtn");
+const musicPanel = document.getElementById("musicPanel");
+const closeMusic = document.getElementById("closeMusic");
+
+musicBtn.addEventListener("click",()=>{
+
+    musicPanel.classList.add("open");
+    bringToFront(musicPanel);
+
+});
+
+closeMusic.addEventListener("click", () => {
+    musicPanel.classList.remove("open");
+
+});
+
+const fullscreenBtn = document.getElementById("fullscreenBtn");
+
+fullscreenBtn.addEventListener("click",()=>{
+
+    if(!document.fullscreenElement){
+
+        document.documentElement.requestFullscreen();
+
+    }else{
+
+        document.exitFullscreen();
+
+    }
+
+});
+
+document.addEventListener("fullscreenchange",()=>{
+
+    if(document.fullscreenElement){
+
+        document.body.classList.add("fullscreen");
+        fullscreenBtn.textContent = "Exit Full Screen";
+
+    }else{
+
+        document.body.classList.remove("fullscreen");
+        fullscreenBtn.textContent = "Full Screen";
+
+    }
+
+});
