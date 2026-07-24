@@ -2,9 +2,11 @@ const timer=document.getElementById("timer");
 const mode=document.getElementById("mode");
 const session=document.getElementById("session");
 
-let focus=25*60;
-let shortBreak=5*60;
-let longBreak=15*60;
+let focus = Number(localStorage.getItem("focusTime")) || 25*60;
+let shortBreak = Number(localStorage.getItem("shortTime")) || 5*60;
+let longBreak = Number(localStorage.getItem("longTime")) || 15*60;
+
+let selectedMode = "focus";
 
 let current=focus;
 
@@ -32,43 +34,59 @@ String(sec).padStart(2,"0");
 
 updateTimer();
 
+const focusInput = document.getElementById("focusInput");
+const shortInput = document.getElementById("shortInput");
+const longInput = document.getElementById("longInput");
+const saveTimer = document.getElementById("saveTimer");
+
+focusInput.value = focus / 60;
+shortInput.value = shortBreak / 60;
+longInput.value = longBreak / 60;
+
 function nextMode(){
 
-if(isFocus){
+    if(isFocus){
 
-completedSessions++;
+        completedSessions++;
 
-if(completedSessions==4){
+        updateEvolution();
 
-mode.innerHTML="🌴 Long Break";
+        if(completedSessions==4){
 
-current=longBreak;
+            mode.innerHTML="Long Break";
+            current=longBreak;
 
-completedSessions=0;
+            completedSessions=0;
 
-}else{
+            updateEvolution();
 
-mode.innerHTML="☕ Short Break";
+            setActive(longBtn);
 
-current=shortBreak;
+        }else{
 
-}
+            mode.innerHTML="Short Break";
+            current=shortBreak;
 
-isFocus=false;
+            setActive(shortBtn);
 
-}else{
+        }
 
-mode.innerHTML="🍅 Focus Time";
+        isFocus=false;
 
-current=focus;
+    }else{
 
-isFocus=true;
+        mode.innerHTML="Focus Time";
+        current=focus;
 
-}
+        isFocus=true;
 
-session.innerHTML=completedSessions+1;
+        setActive(focusBtn);
 
-updateTimer();
+    }
+
+    session.innerHTML=completedSessions+1;
+
+    updateTimer();
 
 }
 
@@ -110,21 +128,23 @@ running=false;
 
 function reset(){
 
-pause();
+    pause();
 
-current=focus;
+    selectedMode = "focus";
 
-isFocus=true;
+    current=focus;
+    isFocus=true;
+    completedSessions=0;
 
-completedSessions=0;
+    mode.innerHTML="Focus Time";
 
-mode.innerHTML="Focus Time";
+    session.innerHTML="1";
 
-session.innerHTML="1";
+    setActive(focusBtn);
 
-updateTimer();
+    updateTimer();
 
-}
+};
 
 document.getElementById("start").onclick=start;
 
@@ -182,10 +202,6 @@ const settingsModal = document.getElementById("settingsModal");
 
 const closeModal = document.getElementById("closeModal");
 
-const themeToggle = document.getElementById("themeToggle");
-
-
-
 settingsBtn.addEventListener("click",()=>{
 
     settingsModal.style.display="flex";
@@ -212,32 +228,248 @@ window.addEventListener("click",(e)=>{
 
 });
 
+const themes = {
 
+    light:{
+        bg:"#d8c2c2",
+        container:"#cbe2e7",
+        text:"#222222",
+        mode:"#d25532",
+        li:"#e8e8e8",
+        liText:"#222222",
+        modal:"#ffffff"
+    },
 
-if(localStorage.getItem("theme")==="dark"){
+    red:{
+        bg:"#e74747",
+        container:"#f45b5b",
+        text:"#ffffff",
+        mode:"#ffffff",
+        li:"#9d3c3c",
+        liText:"#ffffff",
+        modal:"#c15c5c"
+    },
 
-    document.body.classList.add("dark");
+    blue:{
+        bg:"#397097",
+        container:"#5a94bd",
+        text:"#ffffff",
+        mode:"#ffffff",
+        li:"#2f5f81",
+        liText:"#ffffff",
+        modal:"#4A7EA4"
+    },
 
-    themeToggle.checked=true;
+    green:{
+        bg:"#2d933c",
+        container:"#52c569",
+        text:"#ffffff",
+        mode:"#ffffff",
+        li:"#3f7f82",
+        liText:"#ffffff",
+        modal:"#249c22"
+    },
+
+    black:{
+        bg:"#484848",
+        container:"#a9a9a9",
+        text:"#ffffff",
+        mode:"#4ade80",
+        li:"#2d2d2d",
+        liText:"#ffffff",
+        modal:"#3b3434"
+    }
+
+};
+
+document.getElementById("lightTheme").addEventListener("click", () => {
+    applyTheme("light");
+});
+
+document.getElementById("redTheme").addEventListener("click", () => {
+    applyTheme("red");
+});
+
+document.getElementById("blueTheme").addEventListener("click", () => {
+    applyTheme("blue");
+});
+
+document.getElementById("greenTheme").addEventListener("click", () => {
+    applyTheme("green");
+});
+
+document.getElementById("blackTheme").addEventListener("click", () => {
+    applyTheme("black");
+});
+
+function applyTheme(name){
+
+    const theme = themes[name];
+
+    document.documentElement.style.setProperty("--bg", theme.bg);
+    document.documentElement.style.setProperty("--container", theme.container);
+    document.documentElement.style.setProperty("--text", theme.text);
+    document.documentElement.style.setProperty("--mode", theme.mode);
+    document.documentElement.style.setProperty("--li", theme.li);
+    document.documentElement.style.setProperty("--li-text", theme.liText);
+    document.documentElement.style.setProperty("--modal", theme.modal);
+
+    document.querySelectorAll(".theme-btn").forEach(btn=>{
+        btn.classList.remove("active");
+    });
+
+    document.getElementById(name+"Theme").classList.add("active");
+
+    localStorage.setItem("theme", name);
 
 }
 
+const focusBtn = document.getElementById("focusBtn");
+const shortBtn = document.getElementById("shortBtn");
+const longBtn = document.getElementById("longBtn");
+
+const savedTheme = localStorage.getItem("theme") || "light";
+applyTheme(savedTheme);
+
+setActive(focusBtn);
+
+function setActive(button){
+
+    document.querySelectorAll(".mode-btn").forEach(btn=>{
+
+        btn.classList.remove("active");
+
+    });
+
+    button.classList.add("active");
+
+};
+
+focusBtn.addEventListener("click",()=>{
+
+    pause();
+
+    selectedMode="focus";
+
+    current=focus;
+    isFocus=true;
+
+    mode.innerHTML="Focus Time";
+
+    updateTimer();
+
+    setActive(focusBtn);
+
+});
+
+shortBtn.addEventListener("click",()=>{
+
+    pause();
+
+    selectedMode="short";
+
+    current=shortBreak;
+    isFocus=false;
+
+    mode.innerHTML="Short Break";
+
+    updateTimer();
+
+    setActive(shortBtn);
+
+});
+
+longBtn.addEventListener("click",()=>{
+
+    pause();
+
+    selectedMode="long";
+
+    current=longBreak;
+    isFocus=false;
+
+    mode.innerHTML="Long Break";
+
+    updateTimer();
+
+    setActive(longBtn);
+
+});
 
 
-themeToggle.addEventListener("change",()=>{
+function updateEvolution(){
 
-    document.body.classList.toggle("dark");
+    const stages=document.querySelectorAll(".stage");
 
-    if(document.body.classList.contains("dark")){
+    stages.forEach(stage=>{
+        stage.classList.remove("active");
+    });
 
-        localStorage.setItem("theme","dark");
+    stages[completedSessions].classList.add("active");
+
+};
+
+saveTimer.addEventListener("click",()=>{
+
+    focus = Number(focusInput.value) * 60;
+    shortBreak = Number(shortInput.value) * 60;
+    longBreak = Number(longInput.value) * 60;
+
+    localStorage.setItem("focusTime", focus);
+    localStorage.setItem("shortTime", shortBreak);
+    localStorage.setItem("longTime", longBreak);
+
+    if(selectedMode=="focus"){
+
+        current = focus;
+
+    }
+
+    else if(selectedMode=="short"){
+
+        current = shortBreak;
 
     }
 
     else{
 
-        localStorage.setItem("theme","light");
+        current = longBreak;
 
     }
+
+    updateTimer();
+
+    settingsModal.style.display="none";
+
+});
+
+const notesBtn = document.getElementById("notesBtn");
+const notesPanel = document.getElementById("notesPanel")
+const closeNotes = document.getElementById("closeNotes");
+
+const notesText = document.getElementById("notesText");
+const saveNotes = document.getElementById("saveNotes");
+const clearNotes = document.getElementById("clearNotes");
+
+notesBtn.addEventListener("click",()=>{
+    notesPanel.classList.add("open");
+
+});
+
+closeNotes.addEventListener("click",()=>{
+    notesPanel.classList.remove("open");
+
+});
+
+notesText.value = localStorage.getItem("notes") || "";
+
+saveNotes.addEventListener("click",()=>{
+    localStorage.setItem("notes",notesText.value);
+
+});
+
+clearNotes.addEventListener("click",()=>{
+    notesText.value="";
+    localStorage.removalItem("notes");
 
 });

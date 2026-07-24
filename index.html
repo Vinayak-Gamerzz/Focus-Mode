@@ -16,13 +16,107 @@
 
     <body>
 
-        <button id="settingsBtn" class="settings-btn">
-            ⚙
-        </button>
+    <div class="sidebar">
+
+        <div class="menu-icon">
+
+
+
+        </div>
+
+            <button id="notesBtn" class="sidebar-btn">
+
+                Notes
+
+            </button>
+
+            <button id="statsMenu" class="sidebar-btn">
+
+                Statistics
+
+            </button>
+
+            <button id="settingsBtn" class="sidebar-btn">
+
+                ⚙
+
+            </button>
+
+    </div>
+
+
+
+        <div class="notes-panel" id="notesPanel">
+
+            <div class="notes-header">
+
+                <h2>Notes</h2>
+
+                <span id="closeNotes">&times;</span>
+
+            </div>
+
+            <textarea id="notesText" placeholder="Write your Notes here..."></textarea>
+
+            <div class="notes-buttons">
+
+                <button id="saveNotes">Save</button>
+
+                <button id="clearNotes">Clear</button>
+
+            </div>
+
+        </div>
 
         <div class="container">
 
             <h1>Pomodoro Focus</h1>
+
+        <div class="timer-modes">
+
+            <button id="focusBtn" class="mode-btn active">Focus</button>
+
+            <button id="shortBtn" class="mode-btn">Short Break</button>
+
+            <button id="longBtn" class="mode-btn">Long Break</button>
+
+        </div>
+
+        <div class="evolution">
+
+                <div class="stage active">
+
+                        <img src="pikachu_egg.png">
+
+                        <p>Egg</p>
+
+                </div>
+
+                <div class="stage">
+
+                        <img src="pika_pika.png">
+
+                        <p>Pikachu</p>
+
+                </div>
+
+                <div class="stage">
+
+                        <img src="pikachu.png">
+
+                        <p>Pikachu</p>
+
+                </div>
+
+                <div class="stage">
+
+                        <img src="raichu.png">
+
+                        <p>Raichu</p>
+
+                </div>
+
+            </div>
 
                 <div class="mode" id="mode">
 
@@ -90,25 +184,54 @@
 
                 <div class="modal-top">
 
-                        <h2>⚙ Settings</h2>
+                    <h2>⚙ Settings</h2>
 
-                        <span id="closeModal">&times;</span>
+                    <span id="closeModal">&times;</span>
 
                 </div>
 
-                    <hr>
+                <hr>
 
                 <div class="theme-setting">
 
-                        <span>Dark Theme</span>
+                    <h3>Theme</h3>
 
-                        <label class="switch">
+                    <div class="theme-buttons">
 
-                            <input type="checkbox" id="themeToggle">
+                        <button id="lightTheme" class="theme-btn light"></button>
 
-                            <span class="slider"></span>
+                        <button id="redTheme" class="theme-btn red"></button>
 
-                        </label>
+                        <button id="blueTheme" class="theme-btn blue"></button>
+
+                        <button id="greenTheme" class="theme-btn green"></button>
+
+                        <button id="blackTheme" class="theme-btn black"></button>
+
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <div class="timer-settings">
+
+                    <h3>Timer Settings</h3>
+
+                        <label>Focus (minutes)</label>
+
+                        <input type="number" id="focusInput" min="1" max="180" value="25">
+
+
+                        <label>Short Break (minutes)</label>
+
+                        <input type="number" id="shortInput" min="1" max="60" value="5">
+
+                        <label>Long Break (minutes)</label>
+
+                        <input type="number" id="longInput" min="1" max="120" value="15">
+
+                        <button id="saveTimer">Save</button>
 
                 </div>
 
