@@ -1,5 +1,3 @@
-
-
 let topZ = 1000;
 
 function bringToFront(panel){
@@ -179,36 +177,81 @@ const input = document.getElementById("todoInput");
 const list = document.getElementById("todoList");
 const addBtn = document.getElementById("addTask");
 
-function addTask() {
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+function saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function renderTasks() {
+
+    list.innerHTML = "";
+
+    tasks.forEach((task,index)=>{
+
+        const li = document.createElement("li");
+
+        const span = document.createElement("span");
+        span.textContent = task.text;
+        span.style.flex = "1";
+
+        if(task.completed){
+            span.classList.add("completed");
+        }
+
+        span.addEventListener("click",()=>{
+
+            task.completed = !task.completed;
+
+            saveTasks();
+
+            renderTasks();
+
+        });
+
+        const del = document.createElement("button");
+
+        del.textContent = "❌";
+        del.className = "delete";
+
+        del.addEventListener("click",()=>{
+
+            tasks.splice(index,1);
+
+            saveTasks();
+
+            renderTasks();
+
+        });
+
+        li.appendChild(span);
+        li.appendChild(del);
+
+        list.appendChild(li);
+
+    });
+
+}
+
+function addTask(){
 
     const text = input.value.trim();
 
-    if (text === "") return;
+    if(text==="") return;
 
-    const li = document.createElement("li");
+    tasks.push({
 
-    const span = document.createElement("span");
-    span.textContent = text;
-    span.style.flex = "1";
+        text:text,
+        completed:false
 
-    span.addEventListener("click", () => {
-        span.classList.toggle("completed");
     });
 
-    const del = document.createElement("button");
-    del.textContent = "❌";
-    del.className = "delete";
+    saveTasks();
 
-    del.addEventListener("click", () => {
-        li.remove();
-    });
+    renderTasks();
 
-    li.appendChild(span);
-    li.appendChild(del);
+    input.value="";
 
-    list.appendChild(li);
-
-    input.value = "";
 }
 
 addBtn.addEventListener("click", addTask);
@@ -216,8 +259,12 @@ addBtn.addEventListener("click", addTask);
 input.addEventListener("keydown", function(e) {
     if (e.key === "Enter") {
         addTask();
+
     }
+
 });
+
+renderTasks();
 
 
 const settingsBtn = document.getElementById("settingsBtn");
@@ -512,7 +559,7 @@ function updateStatistics(){
 
     document.getElementById("focusTimeStat").innerHTML = (Number(localStorage.getItem("focusMinutes")) || 0) + " min";
 
-    document.getElementById("completedTasks").innerHTML = document.querySelectorAll(".completed").length;
+    document.getElementById("completedTasks").innerHTML = tasks.filter(task => task.completed).length;
 
 };
 
