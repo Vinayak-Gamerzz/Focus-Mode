@@ -19,6 +19,8 @@ let current=focus;
 
 let interval=null;
 
+let endTime = null;
+
 let running=false;
 
 let isFocus=true;
@@ -113,29 +115,33 @@ function nextMode(){
 
 function start(){
 
-    if(running)return;
+    if(running) return;
 
-    running=true;
+    running = true;
 
-    interval=setInterval(()=>{
+    endTime = Date.now() + current * 1000;
 
-    current--;
+    interval = setInterval(() => {
 
-    updateTimer();
+        const remaining = Math.ceil((endTime - Date.now()) / 1000);
 
-        if(current<=0){
+        current = Math.max(0, remaining);
 
-        clearInterval(interval);
+        updateTimer();
 
-        running=false;
+        if(current <= 0){
 
-        nextMode();
+            clearInterval(interval);
 
-        start();
+            running = false;
+
+            nextMode();
+
+            start();
 
         }
 
-    },1000);
+    }, 250);
 
 }
 
@@ -143,9 +149,13 @@ function pause(){
 
     clearInterval(interval);
 
-    running=false;
+    running = false;
 
+    if(endTime){
+        current = Math.max(0, Math.ceil((endTime - Date.now()) / 1000));
     }
+
+}
 
 function reset(){
 
