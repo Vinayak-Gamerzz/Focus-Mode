@@ -38,13 +38,19 @@
 
             <button id="settingsBtn" class="sidebar-btn">
 
-                ⚙
+                Settings
 
             </button>
 
             <button id="todoBtn" class="sidebar-btn">
 
                 To-Do
+
+            </button>
+
+            <button id="musicBtn" class="sidebar-btn">
+
+                Music
 
             </button>
 
@@ -113,6 +119,54 @@
                     <button id="addTask">Add</button>
 
                 <ul id="todoList"></ul>
+
+        </div>
+
+        <div class="music-panel" id="musicPanel">
+
+            <div class="music-top">
+
+                <h2>Music</h2>
+
+                <span id="closeMusic">&times;</span>
+
+            </div>
+
+                <button class="music-option" data-music="off">
+
+                    Off
+
+                </button>
+
+                <button class="music-option" data-music="lofi">
+
+                    Lofi
+
+                </button>
+
+                <button class="music-option" data-music="rain">
+
+                    Lofi Rain
+
+                </button>
+
+                <button class="music-option" data-music="forest">
+
+                    Enchanted Forest
+
+                </button>
+
+                <button class="music-option" data-music="cafe">
+
+                    Lofi Cafe
+
+                </button>
+
+            <hr>
+
+            <label>Volume</label>
+
+            <input type="range" id="volume" min="0" max="1" step="0.01" value="0.5">
 
         </div>
 
@@ -271,7 +325,11 @@
 
         </div>
 
+        <audio id="bgMusic" loop></audio>
+
         <script src="script.js"></script>
+
+
 
     </body>
 

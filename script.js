@@ -525,3 +525,50 @@ statsMenu.addEventListener("click",()=>{
     updateStatistics();
 
 });
+
+const todoBtn = document.getElementById("todoBtn");
+const todoPanel = document.getElementById("todoPanel");
+const closeTodo = document.getElementById("closeTodo");
+
+todoBtn.addEventListener("click", () => {
+    todoPanel.classList.add("open");
+});
+
+closeTodo.addEventListener("click", () => {
+    todoPanel.classList.remove("open");
+});
+
+const music = document.getElementById("bgMusic");
+
+const songs = {
+
+    lofi:"music/lofi.mp3",
+    rain:"music/Rainy.mp3",
+    forest:"music/Forest.mp3",
+    cafe:"music/cafe.mp3"
+
+};
+
+document.querySelectorAll(".music-option").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+        const type = btn.dataset.music;
+
+        if(type=="off"){
+            music.pause();
+            return;
+
+        }
+
+        music.src = songs[type];
+        music.play();
+
+    })
+
+});
+
+document.getElementById("volume").addEventListener("input",(e)=>{
+    music.volume = e.target.value;
+
+});
+
+localStorage.setItem("music","rain")
