@@ -626,3 +626,87 @@ document.addEventListener("fullscreenchange",()=>{
     }
 
 });
+
+const normalWallpapers = document.querySelectorAll(".wallpaper.normal");
+const fullscreenWallpapers = document.querySelectorAll(".wallpaper.full");
+
+const savedNormal = localStorage.getItem("normalBackground") || "none";
+const savedFullscreen = localStorage.getItem("fullscreenBackground") || "none";
+
+function applyBackground(){
+
+    let bg;
+
+    if(document.fullscreenElement){
+
+        bg = localStorage.getItem("fullscreenBackground") || "none";
+
+    }else{
+
+        bg = localStorage.getItem("normalBackground") || "none";
+
+    }
+
+    if(bg === "none"){
+
+        document.body.style.backgroundImage = "none";
+
+    }else{
+
+        document.body.style.backgroundImage = `url("${bg}")`;
+
+    }
+
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
+    document.body.style.backgroundRepeat = "no-repeat";
+
+}
+
+applyBackground();
+
+normalWallpapers.forEach(img=>{
+
+    if(img.dataset.bg===savedNormal){
+        img.classList.add("active");
+    }else{
+        img.classList.remove("active");
+    }
+
+    img.addEventListener("click",()=>{
+
+        normalWallpapers.forEach(i=>i.classList.remove("active"));
+
+        img.classList.add("active");
+
+        localStorage.setItem("normalBackground",img.dataset.bg);
+
+        applyBackground();
+
+    });
+
+});
+
+fullscreenWallpapers.forEach(img=>{
+
+    if(img.dataset.bg===savedFullscreen){
+        img.classList.add("active");
+    }else{
+        img.classList.remove("active");
+    }
+
+    img.addEventListener("click",()=>{
+
+        fullscreenWallpapers.forEach(i=>i.classList.remove("active"));
+
+        img.classList.add("active");
+
+        localStorage.setItem("fullscreenBackground",img.dataset.bg);
+
+        applyBackground();
+
+    });
+
+});
+
+document.addEventListener("fullscreenchange",applyBackground);
