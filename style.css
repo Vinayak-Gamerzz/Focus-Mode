@@ -964,3 +964,104 @@ body.fullscreen .stage img{
     border-radius:20px;
 
 }
+
+.load-window {
+    display: flex;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgb(31, 29, 29);
+    outline: 0.3vw solid rgb(32, 128, 192);
+
+    z-index: 9999;
+}
+
+.load-window.disappear {
+    animation: slideUp 1s ease-in-out forwards;
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(0px);
+    }
+    100% {
+        transform: translateY(-110vh);
+    }
+}
+
+.load-box {
+    position: absolute;
+    top: 45%;
+    left: 35%;
+
+    font-size: 2.5vw;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-align: center;
+
+    padding: 15px 10px;
+
+    background-color: rgb(32, 128, 192);
+    outline: 0.3vw solid rgb(0, 0, 0);
+    box-shadow: 0.9vw 0.9vw 0px 0px rgb(0, 0, 0);
+
+    animation: bounce 1s ease-in-out infloade;
+
+    z-index: 9999;
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(20px);
+    }
+    50% {
+        transform: translateY(0px);
+    }
+    100% {
+        transform: translateY(20px);
+    }
+}
+
+.progress-bar {
+    position: absolute;
+    left: 2.5%;
+    bottom: 5%;
+
+    width: 95%;
+    height: 4%;
+
+    background-color: white;
+    outline: 0.3vw solid rgb(0, 0, 0);
+    box-shadow: 0.7vw 0.7vw 0px 0px rgb(0, 0, 0);
+
+    z-index: 9999;
+}
+
+.progression {
+    position: absolute;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-image: 
+    linear-gradient(to right, rgb(128, 151, 255), rgb(83, 71, 255));
+
+    animation: progressExpand 1.6s ease-in-out;
+
+    z-index: 9999;
+}
+
+@keyframes progressExpand {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 100%;
+    }
+}

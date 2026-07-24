@@ -1,3 +1,5 @@
+
+
 let topZ = 1000;
 
 function bringToFront(panel){
@@ -710,3 +712,9 @@ fullscreenWallpapers.forEach(img=>{
 });
 
 document.addEventListener("fullscreenchange",applyBackground);
+
+const loadWindow = document.querySelector('.load-window');
+
+setInterval(() => {
+    loadWindow.classList.add('disappear');
+}, 1800);
