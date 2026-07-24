@@ -4,7 +4,7 @@
 
     <head>
 
-        <tile>Focus Mode On</tile>
+        <title>Focus Mode On</title>
 
         <link rel="stylesheet" href="style.css">
 
@@ -15,6 +15,10 @@
     </head>
 
     <body>
+
+        <button id="settingsBtn" class="settings-btn">
+            ⚙
+        </button>
 
         <div class="container">
 
@@ -66,7 +70,7 @@
 
                 <div class="todo">
 
-                    <imput id="todoInput" type="text" placeholder="Add a Task"/>
+                    <input id="todoInput" type="text" placeholder="Add a Task"/>
 
                         <button id="addTask">
 
@@ -77,6 +81,38 @@
                     <ul id="todoList"></ul>
 
                 </div>
+
+        </div>
+
+        <div class="modal" id="settingsModal">
+
+            <div class="modal-box">
+
+                <div class="modal-top">
+
+                        <h2>⚙ Settings</h2>
+
+                        <span id="closeModal">&times;</span>
+
+                </div>
+
+                    <hr>
+
+                <div class="theme-setting">
+
+                        <span>Dark Theme</span>
+
+                        <label class="switch">
+
+                            <input type="checkbox" id="themeToggle">
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                </div>
+
+            </div>
 
         </div>
 

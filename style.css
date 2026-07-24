@@ -8,21 +8,19 @@
 }
 
 body {
-
-    background: #111827;
+    background: #3f588c;
     color: white;
-
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
-
+    padding: 40px 0;
 }
 
 .container {
 
     width: 420px;
-    background: rgb(250, 250, 168);
+    background: rgb(235, 235, 105);
     padding: 30px;
     border-radius: 20px;
     box-shadow: 0 0 25px rgba(0, 0, 0, .4);
@@ -171,5 +169,145 @@ li {
     padding: 5px 10px;
     border-radius: 6px;
     cursor: pointer;
+
+}
+
+.settings-btn{
+    position:fixed;
+    top:25px;
+    right:25px;
+    width:55px;
+    height:55px;
+    border:none;
+    border-radius:50%;
+    background:#3b82f6;
+    color:white;
+    font-size:24px;
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+    transition:.3s;
+    z-index:100;
+}
+
+.settings-btn:hover{
+
+    transform:rotate(90deg) scale(1.1);
+
+}
+
+.modal{
+
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+
+}
+
+.modal-box{
+
+    width:350px;
+    background:white;
+    color:black;
+    padding:25px;
+    border-radius:15px;
+
+}
+
+.modal-top{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+}
+
+#closeModal{
+
+    font-size:30px;
+    cursor:pointer;
+
+}
+
+.theme-setting{
+
+    margin-top:25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+}
+
+.switch{
+
+    position:relative;
+    width:55px;
+    height:30px;
+
+}
+
+.switch input{
+
+    display:none;
+
+}
+
+.slider{
+
+    position:absolute;
+    inset:0;
+    background:#ccc;
+    border-radius:50px;
+    cursor:pointer;
+    transition:.3s;
+
+}
+
+.slider::before{
+
+    content:"";
+    position:absolute;
+    width:24px;
+    height:24px;
+    left:3px;
+    top:3px;
+    background:white;
+    border-radius:50%;
+    transition:.3s;
+
+}
+
+input:checked+.slider{
+
+    background:#22c55e;
+
+}
+
+input:checked+.slider::before{
+
+    transform:translateX(25px);
+
+}
+
+body.dark{
+
+    background:#423f3f;
+
+}
+
+body.dark .container{
+
+    background:#555658;
+    color:white;
+
+}
+
+body.dark .modal-box{
+
+    background:#777a7d;
+    color:white;
 
 }
