@@ -20,7 +20,7 @@
 
         <div class="menu-icon">
 
-
+            ☰
 
         </div>
 
@@ -32,7 +32,7 @@
 
             <button id="statsMenu" class="sidebar-btn">
 
-                Statistics
+                Stats
 
             </button>
 
@@ -42,13 +42,19 @@
 
             </button>
 
+            <button id="todoBtn" class="sidebar-btn">
+
+                To-Do
+
+            </button>
+
     </div>
 
 
 
         <div class="notes-panel" id="notesPanel">
 
-            <div class="notes-header">
+            <div class="notes-top">
 
                 <h2>Notes</h2>
 
@@ -56,15 +62,57 @@
 
             </div>
 
-            <textarea id="notesText" placeholder="Write your Notes here..."></textarea>
+            <textarea id="notesText" placeholder="Write your notes here..."></textarea>
 
-            <div class="notes-buttons">
+                <div class="notes-buttons">
 
-                <button id="saveNotes">Save</button>
+                    <button id="saveNotes">Save</button>
 
-                <button id="clearNotes">Clear</button>
+                    <button id="clearNotes">Clear</button>
+
+                </div>
+
+        </div>
+
+        <div class="stats-panel" id="statsPanel">
+
+            <div class="stats-top">
+
+                <h2>Statistics</h2>
+
+                <span id="closeStats">&times;</span>
 
             </div>
+
+            <div class="stats-card">
+
+                <p>Today's Sessions <span id="todaySessions">0</span></p>
+
+                <p>Total Sessions <span id="totalSessions">0</span></p>
+
+                <p>Focus Time <span id="focusTimeStat">0 min</span></p>
+
+                <p>Completed Tasks <span id="completedTasks">0</span></p>
+
+            </div>
+
+        </div>
+
+        <div class="todo-panel" id="todoPanel">
+
+            <div class="todo-top">
+
+                <h2>To-Do</h2>
+
+                <span id="closeTodo">&times;</span>
+
+            </div>
+
+                <input id="todoInput" placeholder="Add Task">
+
+                    <button id="addTask">Add</button>
+
+                <ul id="todoList"></ul>
 
         </div>
 
@@ -72,109 +120,93 @@
 
             <h1>Pomodoro Focus</h1>
 
-        <div class="timer-modes">
+                <div class="timer-modes">
 
-            <button id="focusBtn" class="mode-btn active">Focus</button>
+                    <button id="focusBtn" class="mode-btn active">Focus</button>
 
-            <button id="shortBtn" class="mode-btn">Short Break</button>
+                    <button id="shortBtn" class="mode-btn">Short Break</button>
 
-            <button id="longBtn" class="mode-btn">Long Break</button>
-
-        </div>
-
-        <div class="evolution">
-
-                <div class="stage active">
-
-                        <img src="pikachu_egg.png">
-
-                        <p>Egg</p>
+                    <button id="longBtn" class="mode-btn">Long Break</button>
 
                 </div>
 
-                <div class="stage">
+                    <div class="evolution">
 
-                        <img src="pika_pika.png">
+                            <div class="stage active">
 
-                        <p>Pikachu</p>
+                                    <img src="pikachu_egg.png">
 
-                </div>
+                                    <p>Egg</p>
 
-                <div class="stage">
+                            </div>
 
-                        <img src="pikachu.png">
+                            <div class="stage">
 
-                        <p>Pikachu</p>
+                                    <img src="pika_pika.png">
 
-                </div>
+                                    <p>Pikachu</p>
 
-                <div class="stage">
+                            </div>
 
-                        <img src="raichu.png">
+                            <div class="stage">
 
-                        <p>Raichu</p>
+                                    <img src="pikachu.png">
 
-                </div>
+                                    <p>Pikachu</p>
 
-            </div>
+                            </div>
 
-                <div class="mode" id="mode">
+                            <div class="stage">
 
-                    Focus Time
+                                    <img src="raichu.png">
 
-                </div>
+                                    <p>Raichu</p>
 
-                <div class="timer" id="timer">
+                            </div>
 
-                    25:00
+                    </div>
 
-                </div>
+                        <div class="mode" id="mode">
 
-                <div class="session">
+                            Focus Time
 
-                    Session <span id="session">1</span>/4
+                        </div>
 
-                </div>
+                        <div class="timer" id="timer">
 
-                <div class="buttons">
+                            25:00
 
-                    <button id="start">
+                        </div>
 
-                        Start
+                        <div class="session">
 
-                    </button>
+                            Session <span id="session">1</span>/4
 
-                    <button id="pause">
+                        </div>
 
-                        Pause
+                        <div class="buttons">
 
-                    </button>
+                            <button id="start">
 
-                    <button id="reset">
+                                Start
 
-                        Reset
+                            </button>
 
-                    </button>
+                            <button id="pause">
 
-                </div>
+                                Pause
 
-                    <hr>
+                            </button>
 
-                    <h2 class="todo-h2">To-Do List</h2>
+                            <button id="reset">
 
-                <div class="todo">
+                                Reset
 
-                    <input id="todoInput" type="text" placeholder="Add a Task"/>
+                            </button>
 
-                        <button id="addTask">
+                        </div>
 
-                            Add
-
-                        </button>
-
-                    <ul id="todoList"></ul>
-
-                </div>
+                            <hr>
 
         </div>
 

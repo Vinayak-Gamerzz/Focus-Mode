@@ -20,15 +20,17 @@ let completedSessions=0;
 
 function updateTimer(){
 
-let min=Math.floor(current/60);
+    let min = Math.floor(current/60);
+    let sec = current%60;
 
-let sec=current%60;
+    let time =
+        String(min).padStart(2,"0") +
+        ":" +
+        String(sec).padStart(2,"0");
 
-timer.innerHTML=
-String(min).padStart(2,"0")
-+":"
-+
-String(sec).padStart(2,"0");
+    timer.innerHTML = time;
+
+    document.title = `${time} - ${mode.innerHTML}`;
 
 }
 
@@ -48,6 +50,18 @@ function nextMode(){
     if(isFocus){
 
         completedSessions++;
+
+        let total = Number(localStorage.getItem("totalSessions")) || 0;
+
+        total++;
+
+        localStorage.setItem("totalSessions", total);
+
+        let minutes = Number(localStorage.getItem("focusMinutes")) || 0;
+
+        minutes += focus / 60;
+
+        localStorage.setItem("focusMinutes", minutes);
 
         updateEvolution();
 
@@ -92,39 +106,39 @@ function nextMode(){
 
 function start(){
 
-if(running)return;
+    if(running)return;
 
-running=true;
+    running=true;
 
-interval=setInterval(()=>{
+    interval=setInterval(()=>{
 
-current--;
+    current--;
 
-updateTimer();
+    updateTimer();
 
-if(current<=0){
+        if(current<=0){
 
-clearInterval(interval);
+        clearInterval(interval);
 
-running=false;
+        running=false;
 
-nextMode();
+        nextMode();
 
-start();
+        start();
 
-}
+        }
 
-},1000);
+    },1000);
 
 }
 
 function pause(){
 
-clearInterval(interval);
+    clearInterval(interval);
 
-running=false;
+    running=false;
 
-}
+    }
 
 function reset(){
 
@@ -157,6 +171,7 @@ const list = document.getElementById("todoList");
 const addBtn = document.getElementById("addTask");
 
 function addTask() {
+
     const text = input.value.trim();
 
     if (text === "") return;
@@ -470,6 +485,43 @@ saveNotes.addEventListener("click",()=>{
 
 clearNotes.addEventListener("click",()=>{
     notesText.value="";
-    localStorage.removalItem("notes");
+    localStorage.removeItem("notes");
+
+});
+
+const statsMenu = document.getElementById("statsMenu");
+const statsPanel = document.getElementById("statsPanel");
+const closeStats = document.getElementById("closeStats");
+
+statsMenu.addEventListener("click",()=>{
+    statsPanel.classList.add("open");
+    updateStatistics();
+
+});
+
+closeStats.addEventListener("click",()=>{
+    statsPanel.classList.remove("open");
+
+});
+
+function updateStatistics(){
+
+    document.getElementById("todaySessions").innerHTML = completedSessions;
+
+    document.getElementById("totalSessions").innerHTML = localStorage.getItem("totalSessions") || 0;
+
+    document.getElementById("focusTimeStat").innerHTML = (Number(localStorage.getItem("focusMinutes")) || 0) + " min";
+
+    document.getElementById("completedTasks").innerHTML = document.querySelectorAll(".completed").length;
+
+};
+
+statsMenu.addEventListener("click",()=>{
+
+    console.log("Stats clicked");
+
+    statsPanel.classList.add("open");
+
+    updateStatistics();
 
 });
